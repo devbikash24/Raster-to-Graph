@@ -17,7 +17,7 @@ import util.misc as utils
 from util.visualize_utils import visualize_monte
 
 
-def train_one_epoch(model, criterion, data_loader, optimizer, epoch, max_norm, args):
+def train_one_epoch(model, criterion, data_loader, optimizer, epoch, max_norm, args, device):
     start_time = datetime.now()
 
     # set to train mode
