@@ -45,6 +45,8 @@ def train_one_epoch(model, criterion, data_loader, optimizer, epoch, max_norm, a
         samples, targets = data[0], data[1]  # Get data from the data loader
         samples = samples.to(device)  # Move samples to the specified device
         targets = [{k: v.to(device) for k, v in t.items()} for t in targets] 
+        graphs = tensors_to_graphs_batch([t['graph'] for t in targets])
+        targets = delete_graphs(targets)
 
         # get randomized inputs and targets
         given_layers = get_given_layers_random_region(targets, graphs)
