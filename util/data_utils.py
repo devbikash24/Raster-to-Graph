@@ -314,6 +314,15 @@ def draw_given_layers_on_tensors_random_region(given_layers, tensors, graphs):
             valid_yellow_pos_left = (pos[0] - rectangle_radius) if (pos[0] - rectangle_radius) >= 0 else 0
             valid_yellow_pos_right = (pos[0] + rectangle_radius) if (pos[0] + rectangle_radius) < temp_tensor.shape[1] else temp_tensor.shape[
                                                                                                                                 1] - 1
+
+            # Ensure all slicing indices are integers
+            valid_yellow_pos_up = int(valid_yellow_pos_up)
+            valid_yellow_pos_down = int(valid_yellow_pos_down)
+            valid_yellow_pos_left = int(valid_yellow_pos_left)
+            valid_yellow_pos_right = int(valid_yellow_pos_right)
+
+            print(f"valid_yellow_pos_up: {valid_yellow_pos_up}, type: {type(valid_yellow_pos_up)}")
+            
             temp_tensor_0[valid_yellow_pos_up:valid_yellow_pos_down + 1, valid_yellow_pos_left:valid_yellow_pos_right + 1] = 255
             temp_tensor_1[valid_yellow_pos_up:valid_yellow_pos_down + 1, valid_yellow_pos_left:valid_yellow_pos_right + 1] = 255
             temp_tensor_2[valid_yellow_pos_up:valid_yellow_pos_down + 1, valid_yellow_pos_left:valid_yellow_pos_right + 1] = 0
