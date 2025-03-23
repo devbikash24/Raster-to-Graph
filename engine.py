@@ -37,9 +37,14 @@ def train_one_epoch(model, criterion, data_loader, optimizer, epoch, max_norm, a
 
     for batch_index, data in enumerate(data_loader):
         # data
-        samples, targets = data_to_cuda(data[0], data[1])
-        graphs = tensors_to_graphs_batch([t['graph'] for t in targets])
-        targets = delete_graphs(targets)
+        # samples, targets = data_to_cuda(data[0], data[1])
+        # graphs = tensors_to_graphs_batch([t['graph'] for t in targets])
+        # targets = delete_graphs(targets)
+
+        # samples, targets = data_to_cuda(data[0], data[1])  # Move data to the specified device
+        samples, targets = data[0], data[1]  # Get data from the data loader
+        samples = samples.to(device)  # Move samples to the specified device
+        targets = [{k: v.to(device) for k, v in t.items()} for t in targets] 
 
         # get randomized inputs and targets
         given_layers = get_given_layers_random_region(targets, graphs)
