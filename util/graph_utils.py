@@ -26,13 +26,26 @@ def graph_to_tensor(graph):
 def tensor_to_graph(tensor):
     gr = {}
     for kv in tensor:
-        # Convert kv[0] to a tuple of values (using .tolist() instead of .item())
-        k = tuple(kv[0].tolist())  # Convert tensor to a list and then to a tuple
-        v = kv[1:5]
-        v = v.tolist()  # Convert v to a list
-        v = [tuple(i) for i in v]  # Convert each element of v into a tuple
-        gr[k] = v
+        # Debugging output to check the structure of kv
+        print(f"kv: {kv}")
+        
+        # Ensure kv[0] is a tensor and convert it to a tuple
+        k = tuple(kv[0].tolist())  # Convert tensor to list then to tuple
+        
+        # Check if kv[1:5] is a valid slice, or directly use kv[1:]
+        v = kv[1:5]  # If kv[1:5] is too complex, we may need to adjust this
+        v = v.tolist()  # Convert v to list
+        
+        # Check if v contains tuples, if not convert each element of v into a tuple
+        if isinstance(v[0], list):
+            v = [tuple(i) for i in v]  # Ensure each element of v is a tuple
+        
+        # Debugging output to check the structure of v
+        print(f"k: {k}, v: {v}")
+        
+        gr[k] = v  # Assign to dictionary
     return gr
+
 
 
 def tensors_to_graphs_batch(tensors):
