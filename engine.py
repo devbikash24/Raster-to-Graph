@@ -54,9 +54,9 @@ def train_one_epoch(model, criterion, data_loader, optimizer, epoch, max_norm, a
         samples, targets = data[0], data[1]  # Get data from the data loader
         if isinstance(samples, torch.Tensor):
             samples = samples.to(device)  # Move samples to the specified device
-        elif isinstance(samples, list):
-            # If samples is a list, convert it to a tensor first
-            samples = torch.stack([torch.tensor(s) for s in samples]).to(device)
+        # elif isinstance(samples, list):
+            # # If samples is a list, convert it to a tensor first
+            # samples = torch.stack([torch.tensor(s) for s in samples]).to(device)
 
 
         # Print and check the targets to debug
