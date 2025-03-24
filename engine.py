@@ -50,6 +50,19 @@ def train_one_epoch(model, criterion, data_loader, optimizer, epoch, max_norm, a
         # samples, targets = data_to_cuda(data[0], data[1])  # Move data to the specified device
         samples, targets = data[0], data[1]  # Get data from the data loader
         samples = samples.to(device)  # Move samples to the specified device
+
+
+        # Print and check the targets to debug
+        print("Targets type before processing:", type(targets))
+        
+        # Ensure that each item in targets is a dictionary
+        if isinstance(targets, list) or isinstance(targets, dict):
+            for t in targets:
+                if not isinstance(t, dict):
+                    print(f"Unexpected type in targets: {type(t)}. The item should be a dictionary.")
+                    continue  # Skip or handle this element accordingly
+
+        
         targets = [{k: v.to(device) for k, v in t.items()} for t in targets] 
         graphs = tensors_to_graphs_batch([t['graph'] for t in targets])
         targets = delete_graphs(targets)
