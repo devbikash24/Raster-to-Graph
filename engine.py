@@ -206,7 +206,7 @@ def evaluate_iter(model, criterion, postprocessor, data_loader, epoch, args):
             # data from cpu to cuda
             samples, targets = data_to_cuda(data[0], data[1])
             # masks
-            masks = samples.decompose()[1]
+            masks = samples.split()[1]
             # targets
             graphs = tensors_to_graphs_batch([t['graph'] for t in targets])
             targets = delete_graphs(targets)
