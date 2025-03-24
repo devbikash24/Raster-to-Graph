@@ -63,7 +63,7 @@ def train_one_epoch(model, criterion, data_loader, optimizer, epoch, max_norm, a
                     continue  # Skip or handle this element accordingly
 
         
-        targets = [{k: v.to(device) for k, v in t.items()} for t in targets] 
+        # targets = [{k: v.to(device) for k, v in t.items()} for t in targets] 
         graphs = tensors_to_graphs_batch([t['graph'] for t in targets])
         targets = delete_graphs(targets)
 
