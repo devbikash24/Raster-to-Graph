@@ -64,7 +64,9 @@ def train_one_epoch(model, criterion, data_loader, optimizer, epoch, max_norm, a
 
         
         # targets = [{k: v.to(device) for k, v in t.items()} for t in targets] 
-        graphs = tensors_to_graphs_batch([t['graph'] for t in targets])
+        # graphs = tensors_to_graphs_batch([t['graph'] for t in targets])
+        graphs = tensors_to_graphs_batch([targets['graph']])
+
         targets = delete_graphs(targets)
 
         # get randomized inputs and targets
