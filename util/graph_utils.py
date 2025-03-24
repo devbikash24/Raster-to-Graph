@@ -26,12 +26,14 @@ def graph_to_tensor(graph):
 def tensor_to_graph(tensor):
     gr = {}
     for kv in tensor:
-        k = tuple([i.item() for i in kv[0]])
+        # Convert kv[0] to a tuple of values (using .tolist() instead of .item())
+        k = tuple(kv[0].tolist())  # Convert tensor to a list and then to a tuple
         v = kv[1:5]
-        v = v.tolist()
-        v = [tuple(i) for i in v]
+        v = v.tolist()  # Convert v to a list
+        v = [tuple(i) for i in v]  # Convert each element of v into a tuple
         gr[k] = v
     return gr
+
 
 def tensors_to_graphs_batch(tensors):
     return [tensor_to_graph(ts) for ts in tensors]
