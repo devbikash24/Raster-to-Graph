@@ -18,6 +18,12 @@ from util.visualize_utils import visualize_monte
 
 
 def train_one_epoch(model, criterion, data_loader, optimizer, epoch, max_norm, args, device):
+    for data in data_loader:
+        if data is None:
+            print("Skipping empty batch.")
+            continue  # Skip empty batches
+
+        # samples, targets = data  # Unpack dataset output
     start_time = datetime.now()
 
     # set to train mode
