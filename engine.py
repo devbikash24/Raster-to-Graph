@@ -76,7 +76,11 @@ def train_one_epoch(model, criterion, data_loader, optimizer, epoch, max_norm, a
         given_layers = get_given_layers_random_region(targets, graphs)
         random_layer_targets = get_random_region_targets(given_layers, graphs, targets)
         tensors = draw_given_layers_on_tensors_random_region(given_layers, samples.decompose()[0], graphs)[0]
-        masks = samples.decompose()[1]
+        chunks = samples.chunk(2, dim=0)
+        if len(chunks) > 1:
+            masks = chunks[1]
+        else:
+            masks = None  # or handle it appropriately
         samples = NestedTensor(tensors, masks)
 
         optimizer.zero_grad()
