@@ -76,12 +76,13 @@ def train_one_epoch(model, criterion, data_loader, optimizer, epoch, max_norm, a
         given_layers = get_given_layers_random_region(targets, graphs)
         random_layer_targets = get_random_region_targets(given_layers, graphs, targets)
         tensors = draw_given_layers_on_tensors_random_region(given_layers, samples.decompose()[0], graphs)[0]
-        chunks = samples.chunk(2, dim=0)
-        if len(chunks) > 1:
-            masks = chunks[1]
-        else:
-            masks = None  # or handle it appropriately
-        samples = NestedTensor(tensors, masks)
+        masks = samples.split(1, dim=0)[1]
+        # chunks = samples.chunk(2, dim=0)
+        # if len(chunks) > 1:
+        #     masks = chunks[1]
+        # else:
+        #     masks = None  # or handle it appropriately
+        # samples = NestedTensor(tensors, masks)
 
         optimizer.zero_grad()
         # model output
@@ -210,7 +211,12 @@ def evaluate_iter(model, criterion, postprocessor, data_loader, epoch, args):
             # data from cpu to cuda
             samples, targets = data_to_cuda(data[0], data[1])
             # masks
-            masks = samples.split(1, dim=0)[1]
+           
+            chunks = samples.chunk(2, dim=0)
+            if len(chunks) > 1:
+                masks = chunks[1]
+            else:
+                masks = None  # or handle it appropriately
 
             # targets
             graphs = tensors_to_graphs_batch([t['graph'] for t in targets])
