@@ -224,7 +224,7 @@ def evaluate_iter(model, criterion, postprocessor, data_loader, epoch, args):
 
             # all results
             monte_results = []
-            tensors, unnormalized = initialize_tensors(samples.decompose()[0])
+            tensors, unnormalized = initialize_tensors(chunks[0])
             monte_times = 1
             for _ in range(monte_times):
                 tensors_this_monte = copy.deepcopy(tensors)
